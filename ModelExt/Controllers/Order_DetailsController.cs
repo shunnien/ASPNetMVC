@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ModelExt.Models;
+using ModelExt.Utility;
+using ModelExt.ViewModels;
 
 namespace ModelExt.Controllers
 {
@@ -17,7 +19,16 @@ namespace ModelExt.Controllers
         // GET: Order_Details
         public ActionResult Index()
         {
-            var order_Details = db.Order_Details.Include(o => o.Orders);
+            //var order_Details = db.Order_Details.Include(o => o.Orders);
+            var order_Details = db.Order_Details.Select(o=> new OrderDetailViewModel()
+            {
+                OrderID = o.OrderID,
+                ProductID = o.ProductID,
+                UnitPrice = o.UnitPrice,
+                Quantity = o.Quantity,
+                Discount = o.Discount,
+                TotalPrice = o.TotalPrice()
+            });
             return View(order_Details.ToList());
         }
 

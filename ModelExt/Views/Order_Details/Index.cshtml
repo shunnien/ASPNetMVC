@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ModelExt.Models.Order_Details>
+﻿@model IEnumerable<ModelExt.ViewModels.OrderDetailViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Discount)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Orders.CustomerID)
+            @Html.DisplayNameFor(model => model.TotalPrice)
         </th>
         <th></th>
     </tr>
@@ -38,7 +38,7 @@
             @Html.DisplayFor(modelItem => item.Discount)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Orders.CustomerID)
+            @Html.DisplayFor(modelItem => item.TotalPrice)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
