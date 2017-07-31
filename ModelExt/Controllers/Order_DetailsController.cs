@@ -33,13 +33,13 @@ namespace ModelExt.Controllers
         }
 
         // GET: Order_Details/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? OrderID, int? ProductID)
         {
-            if (id == null)
+            if (OrderID == null || ProductID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order_Details order_Details = db.Order_Details.Find(id);
+            Order_Details order_Details = db.Order_Details.Find(OrderID, ProductID);
             if (order_Details == null)
             {
                 return HttpNotFound();
@@ -73,13 +73,13 @@ namespace ModelExt.Controllers
         }
 
         // GET: Order_Details/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? OrderID, int? ProductID)
         {
-            if (id == null)
+            if (OrderID == null || ProductID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order_Details order_Details = db.Order_Details.Find(id);
+            Order_Details order_Details = db.Order_Details.Find(OrderID, ProductID);
             if (order_Details == null)
             {
                 return HttpNotFound();
@@ -106,13 +106,13 @@ namespace ModelExt.Controllers
         }
 
         // GET: Order_Details/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? OrderID, int? ProductID)
         {
-            if (id == null)
+            if (OrderID == null || ProductID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order_Details order_Details = db.Order_Details.Find(id);
+            Order_Details order_Details = db.Order_Details.Find(OrderID, ProductID);
             if (order_Details == null)
             {
                 return HttpNotFound();
