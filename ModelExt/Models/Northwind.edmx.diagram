@@ -6,7 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c17766162b114fbe88873227ceb26f9e" Name="Diagram1">
         <EntityTypeShape EntityType="NorthwindModel.Orders" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="NorthwindModel.Products" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NorthwindModel.Order_Details" Width="1.5" PointX="3" PointY="1.625" />
+        <AssociationConnector Association="NorthwindModel.FK_Order_Details_Orders" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

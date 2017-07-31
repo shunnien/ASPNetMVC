@@ -26,6 +26,6 @@ namespace ModelExt.Models
         }
     
         public virtual DbSet<Orders> Orders { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<Order_Details> Order_Details { get; set; }
     }
 }

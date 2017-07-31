@@ -10,107 +10,112 @@ using ModelExt.Models;
 
 namespace ModelExt.Controllers
 {
-    public class ProductsController : Controller
+    public class Order_DetailsController : Controller
     {
         private NorthwindEntities db = new NorthwindEntities();
 
-        // GET: Products
+        // GET: Order_Details
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            var order_Details = db.Order_Details.Include(o => o.Orders);
+            return View(order_Details.ToList());
         }
 
-        // GET: Products/Details/5
+        // GET: Order_Details/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
-            if (products == null)
+            Order_Details order_Details = db.Order_Details.Find(id);
+            if (order_Details == null)
             {
                 return HttpNotFound();
             }
-            return View(products);
+            return View(order_Details);
         }
 
-        // GET: Products/Create
+        // GET: Order_Details/Create
         public ActionResult Create()
         {
+            ViewBag.OrderID = new SelectList(db.Orders, "OrderID", "CustomerID");
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Order_Details/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued")] Products products)
+        public ActionResult Create([Bind(Include = "OrderID,ProductID,UnitPrice,Quantity,Discount")] Order_Details order_Details)
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(products);
+                db.Order_Details.Add(order_Details);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(products);
+            ViewBag.OrderID = new SelectList(db.Orders, "OrderID", "CustomerID", order_Details.OrderID);
+            return View(order_Details);
         }
 
-        // GET: Products/Edit/5
+        // GET: Order_Details/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
-            if (products == null)
+            Order_Details order_Details = db.Order_Details.Find(id);
+            if (order_Details == null)
             {
                 return HttpNotFound();
             }
-            return View(products);
+            ViewBag.OrderID = new SelectList(db.Orders, "OrderID", "CustomerID", order_Details.OrderID);
+            return View(order_Details);
         }
 
-        // POST: Products/Edit/5
+        // POST: Order_Details/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued")] Products products)
+        public ActionResult Edit([Bind(Include = "OrderID,ProductID,UnitPrice,Quantity,Discount")] Order_Details order_Details)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(products).State = EntityState.Modified;
+                db.Entry(order_Details).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(products);
+            ViewBag.OrderID = new SelectList(db.Orders, "OrderID", "CustomerID", order_Details.OrderID);
+            return View(order_Details);
         }
 
-        // GET: Products/Delete/5
+        // GET: Order_Details/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
-            if (products == null)
+            Order_Details order_Details = db.Order_Details.Find(id);
+            if (order_Details == null)
             {
                 return HttpNotFound();
             }
-            return View(products);
+            return View(order_Details);
         }
 
-        // POST: Products/Delete/5
+        // POST: Order_Details/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Products products = db.Products.Find(id);
-            db.Products.Remove(products);
+            Order_Details order_Details = db.Order_Details.Find(id);
+            db.Order_Details.Remove(order_Details);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
