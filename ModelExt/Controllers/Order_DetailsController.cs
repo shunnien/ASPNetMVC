@@ -20,7 +20,7 @@ namespace ModelExt.Controllers
         public ActionResult Index()
         {
             //var order_Details = db.Order_Details.Include(o => o.Orders);
-            var order_Details = db.Order_Details.Select(o=> new OrderDetailViewModel()
+            var order_Details = db.Order_Details.ToList().Select(o=> new OrderDetailViewModel()
             {
                 OrderID = o.OrderID,
                 ProductID = o.ProductID,
@@ -29,7 +29,7 @@ namespace ModelExt.Controllers
                 Discount = o.Discount,
                 TotalPrice = o.TotalPrice()
             });
-            return View(order_Details.ToList());
+            return View(order_Details);
         }
 
         // GET: Order_Details/Details/5
