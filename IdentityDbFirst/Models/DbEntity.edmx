@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IdentityDbFirst.Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="IdentityRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentityUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="IdentityUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentityUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentityUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" />
+          <Property Name="SecurityStamp" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_IdentityUserClaims_IdentityUsers_UserId">
+          <End Role="IdentityUsers" Type="Self.IdentityUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserClaims" Type="Self.IdentityUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityUserLogins_IdentityUsers_UserId">
+          <End Role="IdentityUsers" Type="Self.IdentityUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserLogins" Type="Self.IdentityUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityUserRoles_IdentityRoles_RoleId">
+          <End Role="IdentityRoles" Type="Self.IdentityRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserRoles" Type="Self.IdentityUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityUserRoles_IdentityUsers_UserId">
+          <End Role="IdentityUsers" Type="Self.IdentityUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserRoles" Type="Self.IdentityUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IdentityDbFirstModelsStoreContainer">
+          <EntitySet Name="IdentityRoles" EntityType="Self.IdentityRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityUserClaims" EntityType="Self.IdentityUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityUserLogins" EntityType="Self.IdentityUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityUserRoles" EntityType="Self.IdentityUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityUsers" EntityType="Self.IdentityUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_IdentityUserClaims_IdentityUsers_UserId" Association="Self.FK_IdentityUserClaims_IdentityUsers_UserId">
+            <End Role="IdentityUsers" EntitySet="IdentityUsers" />
+            <End Role="IdentityUserClaims" EntitySet="IdentityUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityUserLogins_IdentityUsers_UserId" Association="Self.FK_IdentityUserLogins_IdentityUsers_UserId">
+            <End Role="IdentityUsers" EntitySet="IdentityUsers" />
+            <End Role="IdentityUserLogins" EntitySet="IdentityUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityUserRoles_IdentityRoles_RoleId" Association="Self.FK_IdentityUserRoles_IdentityRoles_RoleId">
+            <End Role="IdentityRoles" EntitySet="IdentityRoles" />
+            <End Role="IdentityUserRoles" EntitySet="IdentityUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityUserRoles_IdentityUsers_UserId" Association="Self.FK_IdentityUserRoles_IdentityUsers_UserId">
+            <End Role="IdentityUsers" EntitySet="IdentityUsers" />
+            <End Role="IdentityUserRoles" EntitySet="IdentityUserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IdentityDbFirst.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="IdentityRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="IdentityUsers" Relationship="Self.IdentityUserRoles" FromRole="IdentityRoles" ToRole="IdentityUsers" />
+        </EntityType>
+        <EntityType Name="IdentityUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IdentityUser" Relationship="Self.FK_IdentityUserClaims_IdentityUsers_UserId" FromRole="IdentityUserClaims" ToRole="IdentityUsers" />
+        </EntityType>
+        <EntityType Name="IdentityUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="IdentityUser" Relationship="Self.FK_IdentityUserLogins_IdentityUsers_UserId" FromRole="IdentityUserLogins" ToRole="IdentityUsers" />
+        </EntityType>
+        <EntityType Name="IdentityUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="IdentityUserClaims" Relationship="Self.FK_IdentityUserClaims_IdentityUsers_UserId" FromRole="IdentityUsers" ToRole="IdentityUserClaims" />
+          <NavigationProperty Name="IdentityUserLogins" Relationship="Self.FK_IdentityUserLogins_IdentityUsers_UserId" FromRole="IdentityUsers" ToRole="IdentityUserLogins" />
+          <NavigationProperty Name="IdentityRoles" Relationship="Self.IdentityUserRoles" FromRole="IdentityUsers" ToRole="IdentityRoles" />
+        </EntityType>
+        <Association Name="FK_IdentityUserClaims_IdentityUsers_UserId">
+          <End Role="IdentityUsers" Type="Self.IdentityUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserClaims" Type="Self.IdentityUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityUserLogins_IdentityUsers_UserId">
+          <End Role="IdentityUsers" Type="Self.IdentityUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserLogins" Type="Self.IdentityUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IdentityUserRoles">
+          <End Role="IdentityRoles" Type="Self.IdentityRole" Multiplicity="*" />
+          <End Role="IdentityUsers" Type="Self.IdentityUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="IdentityRoles" EntityType="Self.IdentityRole" />
+          <EntitySet Name="IdentityUserClaims" EntityType="Self.IdentityUserClaim" />
+          <EntitySet Name="IdentityUserLogins" EntityType="Self.IdentityUserLogin" />
+          <EntitySet Name="IdentityUsers" EntityType="Self.IdentityUser" />
+          <AssociationSet Name="FK_IdentityUserClaims_IdentityUsers_UserId" Association="Self.FK_IdentityUserClaims_IdentityUsers_UserId">
+            <End Role="IdentityUsers" EntitySet="IdentityUsers" />
+            <End Role="IdentityUserClaims" EntitySet="IdentityUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityUserLogins_IdentityUsers_UserId" Association="Self.FK_IdentityUserLogins_IdentityUsers_UserId">
+            <End Role="IdentityUsers" EntitySet="IdentityUsers" />
+            <End Role="IdentityUserLogins" EntitySet="IdentityUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="IdentityUserRoles" Association="Self.IdentityUserRoles">
+            <End Role="IdentityRoles" EntitySet="IdentityRoles" />
+            <End Role="IdentityUsers" EntitySet="IdentityUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IdentityDbFirstModelsStoreContainer" CdmEntityContainer="DataEntities">
+          <EntitySetMapping Name="IdentityRoles">
+            <EntityTypeMapping TypeName="IdentityDbFirst.Models.IdentityRole">
+              <MappingFragment StoreEntitySet="IdentityRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUserClaims">
+            <EntityTypeMapping TypeName="IdentityDbFirst.Models.IdentityUserClaim">
+              <MappingFragment StoreEntitySet="IdentityUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUserLogins">
+            <EntityTypeMapping TypeName="IdentityDbFirst.Models.IdentityUserLogin">
+              <MappingFragment StoreEntitySet="IdentityUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUsers">
+            <EntityTypeMapping TypeName="IdentityDbFirst.Models.IdentityUser">
+              <MappingFragment StoreEntitySet="IdentityUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="IdentityUserRoles" TypeName="IdentityDbFirst.Models.IdentityUserRoles" StoreEntitySet="IdentityUserRoles">
+            <EndProperty Name="IdentityRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="IdentityUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
