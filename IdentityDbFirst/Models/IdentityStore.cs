@@ -34,7 +34,7 @@ namespace IdentityDbFirst.Models
             this.db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        // IQueryableUserStore<IdentityUser, int>
+        #region -- IQueryableUserStore<IdentityUser, int> --
 
         /// <inheritdoc />
         /// <summary>
@@ -43,7 +43,9 @@ namespace IdentityDbFirst.Models
         /// <value>The users.</value>
         public IQueryable<IdentityUser> Users => this.db.IdentityUsers;
 
-        // IUserStore<IdentityUser, Key>
+        #endregion
+
+        #region -- IUserStore<IdentityUser, Key> --
 
         /// <inheritdoc />
         /// <summary>
@@ -104,7 +106,9 @@ namespace IdentityDbFirst.Models
             return this.db.SaveChangesAsync();
         }
 
-        // IUserPasswordStore<IdentityUser, Key>
+        #endregion
+
+        #region -- IUserPasswordStore<IdentityUser, Key> --
 
         /// <summary>
         /// Get the user password hash
@@ -150,7 +154,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        // IUserLoginStore<IdentityUser, Key>
+        #endregion
+
+        #region -- IUserLoginStore<IdentityUser, Key> --
 
         /// <summary>
         /// Adds a user login with the specified provider and key
@@ -227,7 +233,6 @@ namespace IdentityDbFirst.Models
             return Task.FromResult<IList<UserLoginInfo>>(user.IdentityUserLogins.Select(l => new UserLoginInfo(l.LoginProvider, l.ProviderKey)).ToList());
         }
 
-
         /// <summary>
         /// Removes the user login with the specified combination if it exists
         /// </summary>
@@ -264,8 +269,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        // IUserClaimStore<IdentityUser, int>
+        #endregion
 
+        #region -- IUserClaimStore<IdentityUser, int> --
 
         /// <summary>
         /// Add a new user claim
@@ -350,7 +356,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        // IUserRoleStore<IdentityUser, int>
+        #endregion
+
+        #region -- IUserRoleStore<IdentityUser, int> --
 
         /// <summary>
         /// Adds a user to a role
@@ -455,7 +463,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        //// IUserSecurityStampStore<IdentityUser, int>
+        #endregion
+
+        #region -- IUserSecurityStampStore<IdentityUser, int> --
 
         /// <summary>
         /// Get the user security stamp
@@ -491,7 +501,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        //// IUserEmailStore<IdentityUser, int>
+        #endregion
+
+        #region -- IUserEmailStore<IdentityUser, int> --
 
         /// <summary>
         /// Returns the user associated with this email
@@ -573,7 +585,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        //// IUserPhoneNumberStore<IdentityUser, int>
+        #endregion
+
+        #region -- IUserPhoneNumberStore<IdentityUser, int> --
 
         /// <summary>
         /// Get the user phone number
@@ -643,7 +657,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        //// IUserTwoFactorStore<IdentityUser, int>
+        #endregion
+
+        #region -- IUserTwoFactorStore<IdentityUser, int> --
 
         /// <summary>
         /// Returns whether two factor authentication is enabled for the user
@@ -679,7 +695,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        //// IUserLockoutStore<IdentityUser, int>
+        #endregion
+
+        #region -- IUserLockoutStore<IdentityUser, int> --
 
         /// <summary>
         /// Returns the current number of failed access attempts.  This number usually will be reset whenever the password is
@@ -804,7 +822,9 @@ namespace IdentityDbFirst.Models
             return Task.FromResult(0);
         }
 
-        //// IDisposable
+        #endregion
+
+        #region -- IDisposable --
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -821,11 +841,13 @@ namespace IdentityDbFirst.Models
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing && this.db != null)
+            if (disposing)
             {
-                this.db.Dispose();
+                db?.Dispose();
             }
         }
+
+        #endregion
     }
 
     /// <summary>
@@ -847,7 +869,7 @@ namespace IdentityDbFirst.Models
             this.db = db;
         }
 
-        //// IQueryableRoleStore<UserRole, TKey>
+        #region -- IQueryableRoleStore<UserRole, TKey> --
 
         /// <summary>
         /// IQueryable Roles
@@ -858,7 +880,9 @@ namespace IdentityDbFirst.Models
             get { return this.db.IdentityRoles; }
         }
 
-        //// IRoleStore<UserRole, TKey>
+        #endregion
+
+        #region -- IRoleStore<UserRole, TKey> --
 
         /// <summary>
         /// Create a new role
@@ -930,7 +954,9 @@ namespace IdentityDbFirst.Models
             return this.db.SaveChangesAsync();
         }
 
-        //// IDisposable
+        #endregion
+
+        #region -- IDisposable --
 
         /// <inheritdoc />
         /// <summary>
@@ -953,7 +979,7 @@ namespace IdentityDbFirst.Models
                 db?.Dispose();
             }
         }
-    }
-    
 
+        #endregion
+    }
 }
