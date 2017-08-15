@@ -8,9 +8,18 @@ using System.Web;
 
 namespace ModelExt.Models
 {
-    //public static class DataBaseFunctions
+    /// <summary>
+    /// Class NorthwindEntities.
+    /// </summary>
+    /// <seealso cref="System.Data.Entity.DbContext" />
     public partial class NorthwindEntities
     {
+        /// <summary>
+        /// Functions the total price.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="productId">The product identifier.</param>
+        /// <returns>System.Nullable&lt;System.Decimal&gt;.</returns>
         [DbFunction("NorthwindModel.Store", "fn_TotalPrice")]
         public decimal? Fn_TotalPrice(int orderId, int productId)
         {
@@ -28,18 +37,21 @@ namespace ModelExt.Models
             return output;
         }
 
+        /// <summary>
+        /// Functions the total product quan.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <returns>System.Nullable&lt;System.Int32&gt;.</returns>
         [DbFunction("NorthwindModel.Store", "fn_TotalProductQuan")]
         public int? Fn_TotalProductQuan(int orderId)
         {
             var paramter = new ObjectParameter("OrderID", orderId);
-            //var output = ((IObjectContextAdapter)db).ObjectContext.CreateQuery<int>("DFDBModel.Store.Function_20140606(@param1, @param2)", parameters.ToArray()
             var lObjectContext = ((IObjectContextAdapter)this).ObjectContext;
             var output = lObjectContext.
                 CreateQuery<int?>("NorthwindModel.Store.fn_TotalProductQuan(@OrderID)", paramter)
                 .Execute(MergeOption.NoTracking)
                 .FirstOrDefault();
             return output;
-            //throw new NotSupportedException("Direct calls are not supported.");
         }
     }
 }
