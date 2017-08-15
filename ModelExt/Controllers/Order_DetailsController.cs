@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -19,16 +20,40 @@ namespace ModelExt.Controllers
         // GET: Order_Details
         public ActionResult Index()
         {
-            //var order_Details = db.Order_Details.Include(o => o.Orders);
-            var order_Details = db.Order_Details.ToList().Select(o=> new OrderDetailViewModel()
+            #region Model 擴充方法 
+
+            //var order_Details = db.Order_Details.ToList().Select(o=> new OrderDetailViewModel()
+            //{
+            //    OrderID = o.OrderID,
+            //    ProductID = o.ProductID,
+            //    UnitPrice = o.UnitPrice,
+            //    Quantity = o.Quantity,
+            //    Discount = o.Discount,
+            //    TotalPrice = o.TotalPrice()
+            //});
+
+            var order_Details = db.Order_Details.ToList().Select(o => new OrderDetailViewModel()
             {
                 OrderID = o.OrderID,
                 ProductID = o.ProductID,
                 UnitPrice = o.UnitPrice,
                 Quantity = o.Quantity,
                 Discount = o.Discount,
-                TotalPrice = o.TotalPrice()
+                TotalPrice = db.StaticFn_TotalPrice(o.OrderID, o.ProductID).Value
             });
+
+            #endregion
+
+
+            //var order_Details = db.Order_Details.Select(o => new OrderDetailViewModel()
+            //{
+            //    OrderID = o.OrderID,
+            //    ProductID = o.ProductID,
+            //    UnitPrice = o.UnitPrice,
+            //    Quantity = o.Quantity,
+            //    Discount = o.Discount,
+            //    TotalPrice = db.Fn_TotalPrice(o.OrderID, o.ProductID).Value
+            //});
             return View(order_Details);
         }
 

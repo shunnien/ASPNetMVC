@@ -25,7 +25,7 @@ namespace ModelExt.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Order_Details> Order_Details { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
     }
 }

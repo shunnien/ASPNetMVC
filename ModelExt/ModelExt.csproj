@@ -154,6 +154,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataBaseFunctions.cs" />
     <Compile Include="Models\Northwind.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -188,8 +189,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\Northwind.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Northwind.Context.cs</LastGenOutput>
       <DependentUpon>Northwind.edmx</DependentUpon>
+      <LastGenOutput>Northwind.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Northwind.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
