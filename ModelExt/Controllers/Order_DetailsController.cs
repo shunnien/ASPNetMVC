@@ -20,6 +20,8 @@ namespace ModelExt.Controllers
         // GET: Order_Details
         public ActionResult Index()
         {
+            #region Model 擴充方法 
+
             //var order_Details = db.Order_Details.ToList().Select(o=> new OrderDetailViewModel()
             //{
             //    OrderID = o.OrderID,
@@ -30,25 +32,29 @@ namespace ModelExt.Controllers
             //    TotalPrice = o.TotalPrice()
             //});
 
-            try
+            var order_Details = db.Order_Details.ToList().Select(o => new OrderDetailViewModel()
             {
-                var order_Details = db.Order_Details.Select(o => new OrderDetailViewModel()
-                {
-                    OrderID = o.OrderID,
-                    ProductID = o.ProductID,
-                    UnitPrice = o.UnitPrice,
-                    Quantity = o.Quantity,
-                    Discount = o.Discount,
-                    TotalPrice = 0
-                    //TotalPrice = db.Fn_TotalPrice(o.OrderID,o.ProductID).Value
-                });
-                return View(order_Details);
-            }
-            catch (EntityException e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+                OrderID = o.OrderID,
+                ProductID = o.ProductID,
+                UnitPrice = o.UnitPrice,
+                Quantity = o.Quantity,
+                Discount = o.Discount,
+                TotalPrice = db.StaticFn_TotalPrice(o.OrderID, o.ProductID).Value
+            });
+
+            #endregion
+
+
+            //var order_Details = db.Order_Details.Select(o => new OrderDetailViewModel()
+            //{
+            //    OrderID = o.OrderID,
+            //    ProductID = o.ProductID,
+            //    UnitPrice = o.UnitPrice,
+            //    Quantity = o.Quantity,
+            //    Discount = o.Discount,
+            //    TotalPrice = db.Fn_TotalPrice(o.OrderID, o.ProductID).Value
+            //});
+            return View(order_Details);
         }
 
         // GET: Order_Details/Details/5
