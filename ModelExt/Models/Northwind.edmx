@@ -35,6 +35,19 @@
           <Property Name="ShipPostalCode" Type="nvarchar" MaxLength="10" />
           <Property Name="ShipCountry" Type="nvarchar" MaxLength="15" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Northwind.dbo.uv_not_null_order' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="uv_not_null_order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="RequiredDate" Type="datetime" />
+          <Property Name="ShippedDate" Type="datetime" />
+          <Property Name="ShipName" Type="nvarchar" MaxLength="40" />
+          <Property Name="ShipAddress" Type="nvarchar" MaxLength="60" />
+        </EntityType>
         <Association Name="FK_Order_Details_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="Order Details" Type="Self.Order Details" Multiplicity="*" />
@@ -57,6 +70,16 @@
         <EntityContainer Name="NorthwindModelStoreContainer">
           <EntitySet Name="Order Details" EntityType="Self.Order Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uv_not_null_order" EntityType="Self.uv_not_null_order" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [uv_not_null_order].[id] AS [id], 
+    [uv_not_null_order].[OrderDate] AS [OrderDate], 
+    [uv_not_null_order].[RequiredDate] AS [RequiredDate], 
+    [uv_not_null_order].[ShippedDate] AS [ShippedDate], 
+    [uv_not_null_order].[ShipName] AS [ShipName], 
+    [uv_not_null_order].[ShipAddress] AS [ShipAddress]
+    FROM [dbo].[uv_not_null_order] AS [uv_not_null_order]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Order_Details_Orders" Association="Self.FK_Order_Details_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Order Details" EntitySet="Order Details" />
@@ -117,7 +140,19 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Order_Details" EntitySet="Order_Details" />
           </AssociationSet>
+          <EntitySet Name="uv_not_null_order" EntityType="NorthwindModel.uv_not_null_order" />
         </EntityContainer>
+        <EntityType Name="uv_not_null_order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="RequiredDate" Type="DateTime" Precision="3" />
+          <Property Name="ShippedDate" Type="DateTime" Precision="3" />
+          <Property Name="ShipName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="ShipAddress" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -152,6 +187,18 @@
                 <ScalarProperty Name="ShipRegion" ColumnName="ShipRegion" />
                 <ScalarProperty Name="ShipPostalCode" ColumnName="ShipPostalCode" />
                 <ScalarProperty Name="ShipCountry" ColumnName="ShipCountry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uv_not_null_order">
+            <EntityTypeMapping TypeName="NorthwindModel.uv_not_null_order">
+              <MappingFragment StoreEntitySet="uv_not_null_order">
+                <ScalarProperty Name="ShipAddress" ColumnName="ShipAddress" />
+                <ScalarProperty Name="ShipName" ColumnName="ShipName" />
+                <ScalarProperty Name="ShippedDate" ColumnName="ShippedDate" />
+                <ScalarProperty Name="RequiredDate" ColumnName="RequiredDate" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

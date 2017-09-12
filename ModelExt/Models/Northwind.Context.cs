@@ -27,5 +27,6 @@ namespace ModelExt.Models
     
         public virtual DbSet<Order_Details> Order_Details { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<uv_not_null_order> uv_not_null_order { get; set; }
     }
 }
